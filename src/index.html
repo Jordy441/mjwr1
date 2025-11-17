@@ -10,47 +10,44 @@
     body { font-family: 'Segoe UI', Roboto, sans-serif; }
     .navbar { background: var(--brand); }
     .navbar .nav-link, .navbar-brand { color:#fff; }
-    .hero { background:url('/assets/hero.jpg') center/cover no-repeat; min-height:50vh; display:flex; align-items:center; justify-content:center; color:#fff; text-align:center; }
-    .btn-accent { background:var(--accent); color:#fff; }
+    .header {
+      background: url('/assets/hero-track.jpg') center/cover no-repeat;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      color: #fff;
+      text-align: center;
+    }
+    .header::after {
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.55);
+    }
+    .header-content {
+      position: relative;
+      z-index: 2;
+    }
+    .header img {
+      max-height: 120px;
+      margin-bottom: 1rem;
+    }
+    .btn-accent { background: var(--accent); color:#fff; }
     .section-title { border-left:4px solid var(--accent); padding-left:.75rem; font-weight:700; }
     .footer { background:#0e1424; color:#cbd5e1; padding:1rem; }
   </style>
 </head>
 <body>
+  <!-- Navigation -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand" href="#">MJWR Motorsport</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="case-studies.html">Case Studies</a></li>
-          <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <header class="hero">
-    <div>
-      <h1>Engineering & Management Consultancy</h1>
-      <p>Delivering performance, precision, and strategy for motorsport teams worldwide.</p>
-      <a href="services.html" class="btn btn-accent">Explore Services</a>
-    </div>
-  </header>
-
-  <main class="container py-5">
-    <h2 class="section-title">Our Expertise</h2>
-    <div class="row mt-3">
-      <div class="col-md-4"><h3>Race Engineering</h3><p>Setup, simulation, and data‑driven performance.</p></div>
-      <div class="col-md-4"><h3>Operations</h3><p>Logistics, spares, and event readiness.</p></div>
-      <div class="col-md-4"><h3>Management</h3><p>Sponsorship, partnerships, and commercial strategy.</p></div>
-    </div>
-  </main>
-
-  <footer class="footer text-center">
-    <p>&copy; 2025 MJWR Motorsport Engineering & Management Consultancy</p>
-  </footer>
-</body>
-</html>
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="mjwrlogo3.jpg" alt="MJWR Logo" width="48" height="48" class="me-2">
+        MJWR Motorsport
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
