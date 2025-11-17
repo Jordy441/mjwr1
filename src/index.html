@@ -1,17 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MJWR Motorsport | Engineering & Management</title>
+  <meta name="description" content="Official motorsport team site: schedule, drivers, results, gallery, and contact." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --brand-primary: #0b2b5a;   /* Deep blue */
+      --brand-accent: #e10600;    /* Motorsport red */
+      --brand-bg: #0a0a0a;        /* Carbon black */
+      --text: #eaeaea;
+      --muted: #9aa0a6;
+      --surface: #121212;
+      --card: #1b1b1b;
+      --focus: #ffeb3b;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--brand-bg); color: var(--text); font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height: 1.5; }
+    a { color: var(--text); text-decoration: none; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+    .container { width: min(1200px, 92%); margin: 0 auto; }
+    header { background: linear-gradient(90deg, var(--brand-primary), #04162e); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; }
+    .logo { display: flex; align-items: center; gap: 0.75rem; }
+    .logo img { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; }
+    .logo h1 { font-size: 1.25rem; margin: 0; letter-spacing: 0.5px; }
+    nav ul { display: flex; gap: 1rem; list-style: none; padding: 0; margin: 0; }
+    nav a { padding: 0.5rem 0.75rem; border-radius: 6px; }
+    nav a:hover { background: rgba(255,255,255,0.08); }
+    .hero {
+      background: url("images/header-track.jpg") center/cover no-repeat;
+      position: relative; isolation: isolate;
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(10,10,10,0.9));
+      z-index: 0;
+    }
+    .hero-inner { position: relative; z-index: 1; padding: 5rem 0; }
+    .hero h2 { font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 0.75rem; }
+    .hero p { color: var(--muted); max-width: 60ch; margin: 0 0 1.5rem; }
+    .cta { display: inline-block; background: var(--brand-accent); color: white; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 700; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(12, 1fr); }
+    section { padding: 2.5rem 0; border-top: 1px solid rgba(255,255,255,0.06); }
+    .card { background: var(--card); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; }
+    .section-title { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1rem; }
+    .section-title h3 { margin: 0; font-size: 1.25rem; letter-spacing: 0.4px; }
+    .muted { color: var(--muted); }
+    /* Schedule */
+    .schedule-item { display: grid; grid-template-columns: 1.5fr 2fr 1fr; gap: 0.75rem; align-items: center; padding: 0.75rem; border-radius: 8px; }
+    .schedule-item:not(:last-child) { border-bottom: 1px dashed rgba(255,255,255,0.08); }
+    .badge { display: inline-block; background: rgba(225,6,0,0.12); color: var(--brand-accent); padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+    /* Drivers */
+    .driver { display: grid; grid-template-columns: 90px 1fr; gap: 1rem; align-items: center; }
+    .driver img { width: 90px; height: 90px; object-fit: cover; border-radius: 10px; }
+    .driver .meta { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    /* Results (live region) */
+    .results { display: grid; gap: 1rem; }
+    .results [aria-live] { border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 0.75rem; }
+    /* Gallery */
+    .gallery { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .gallery img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; }
+    /* Contact */
+    form { display: grid; gap: 0.75rem; }
+    input, textarea, select, button { background: var(--surface); color: var(--text); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 0.6rem 0.75rem; }
+    button { background: var(--brand-accent); border: none; font-weight: 700; cursor: pointer; }
+    button:hover { filter: brightness(1.08); }
+    /* Layout tweaks */
+    .col-12 { grid-column: span 12; }
+    .col-6 { grid-column: span 6; }
+    .col-4 { grid-column: span 4; }
+    @media (max-width: 920px) {
+      .schedule-item { grid-template-columns: 1fr; }
+      nav ul { flex-wrap: wrap; }
+    }
+  </style>
 </head>
-
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-  </main>
-</body>
+  <header role="banner">
+    <div class="container topbar">
+      <a class="logo" href="/" aria-label="MJWR Motorsport home">
+        <img src="images/logo.png" alt="MJWR Motorsport logo" />
+        <h1>MJWR Motorsport</h1>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#drivers">Drivers</a></li>
+          <li><a href="#results">Results</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="hero">
+      <div class="container hero-inner">
+        <h2>Engineering speed. Managing performance.</h2>
+        <p>Precision, teamwork, and relentless iteration. Explore our race calendar, meet the team, and track results live.</p>
+        <a class="cta" href="#schedule">View season schedule</a>
+      </div>
+    </div>
+  </header>
 
+  <main id="content">
+    <section id="schedule" aria-labelledby="schedule-title">
+      <div class="container">
+        <div class="section-title">
+          <h3 id="schedule-title">Season schedule</h3>
+          <span class="muted">All times local</span>
+        </div>
+        <div class="card">
+          <div class="schedule-item">
+            <div>
+              <strong>Round 1: Silverstone</strong><br />
+              <span class="muted">Sat 15 Feb · Silverstone Circuit</span>
+            </div>
+            <div>
+              <span class="badge">Practice</span> 10:00 — 11:30<br />
+              <span class="badge">Qualifying</span> 13:30 — 14:15<br />
+              <span class="badge">Race</span> 16:00 — 17:30
+            </div>
+            <div class="muted">Status: Scheduled</div>
+          </div>
+          <div class="schedule-item">
+            <div>
+              <strong>Round 2: Brands Hatch</strong><br />
+              <span class="muted">Sun 02 Mar · Brands Hatch</span>
+            </div>
+            <div>
+              <span class="badge">Practice</span> 09:30 — 11:00<br />
+              <span class="badge">Qualifying</span> 12:45 — 13:30<br />
+              <span class="badge">Race</span> 15:15 — 16:45
+            </div>
+            <div class="muted">Status: Scheduled</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="drivers" aria-labelledby="drivers-title">
+      <div class="container">
+        <div class="section-title">
+          <h3 id="drivers-title">Drivers & team</h3>
+          <a href="#" class="muted">Team roster PDF</a>
+        </div>
+        <div class="grid">
+          <div class="col-6 card driver">
+            <img src="images/driver-01.jpg" alt="Driver 7, Alex Reid, wearing team suit" />
+            <div>
+              <strong>Alex Reid</strong>
+              <div class="meta">
+                <span class="badge">Car #7</span>
+                <span class="muted">Chassis: MJWR-24</span>
+                <span class="muted">Engine: 2.0L Turbo</span>
+              </div>
+              <p class="muted">Aggressive but consistent in mixed conditions. Specialist in qualifying pace.</p>
+            </div>
+          </div>
+          <div class="col-6 card driver">
+            <img src="images/driver-02.jpg" alt="Driver 22, Maya Chen, on the grid" />
+            <div>
+              <strong>Maya Chen</strong>
+              <div class="meta">
+                <span class="badge">Car #22</span>
+                <span class="muted">Chassis: MJWR-24</span>
+                <span class="muted">Engine: 2.0L Turbo</span>
+              </div>
+              <p class="muted">Racecraft-focused, excels in tire management and late-race pace.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-title">
+          <h3 id="results-title">Live results</h3>
+          <span class="muted">Auto-updating feed</span>
+        </div>
+        <div class="results">
+          <div id="results-feed" class="card" role="region" aria-live="polite" aria-busy="false" aria-label="Latest race updates">
+            <p class="muted">Awaiting session data…</p>
+          </div>
+          <div class="card">
+            <strong>Standings</strong>
+            <ul>
+              <li>Alex Reid — 25 pts</li>
+              <li>Maya Chen — 18 pts</li>
+              <li>Team MJWR — 43 pts (Constructors)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" aria-labelledby="gallery-title">
+      <div class="container">
+        <div class="section-title">
+          <h3 id="gallery-title">Gallery</h3>
+          <a href="#" class="muted">Download media kit</a>
+        </div>
+        <div class="gallery">
+          <img src="images/gallery-01.jpg" alt="MJWR car taking the apex at Silverstone" />
+          <img src="images/gallery-02.jpg" alt="Pit stop tire change under 2 seconds" />
+          <img src="images/gallery-03.jpg" alt="Sunset shot of the paddock with team trucks" />
+          <img src="images/gallery-04.jpg" alt="Driver celebrating on the podium with trophy" />
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="section-title">
+          <h3 id="contact-title">Contact</h3>
+          <span class="muted">Partnerships, media, careers</span>
+        </div>
+        <div class="grid">
+          <div class="col-6 card">
+            <form aria-describedby="contact-help">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required />
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+              <label for="topic">Topic</label>
+              <select id="topic" name="topic">
+                <option>Partnership</option>
+                <option>Media</option>
+                <option>Careers</option>
+                <option>General</option>
+              </select>
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+              <button type="submit">Send message</button>
+              <p id="contact-help" class="muted">We aim to respond within 2 business days.</p>
+            </form>
+          </div>
+          <div class="col-6 card">
+            <strong>Press & media</strong>
+            <p class="muted">Download our brand guidelines, car renders, and high-res photography.</p>
+            <ul>
+              <li><a href="#">Brand guidelines (PDF)</a></li>
+              <li><a href="#">Logo pack (SVG/PNG)</a></li>
+              <li><a href="#">Photography (ZIP)</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="container" style="padding: 2rem 0; display: flex; justify-content: space-between; align-items: center;">
+      <p class="muted">© 2025 MJWR Motorsport Engineering & Management</p>
+      <div style="display:flex; gap:0.75rem;">
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="YouTube">YouTube</a>
+        <a href="#" aria-label="X">X</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Demo: Live results auto-update (replace with real API or websocket)
+    const feed = document.getElementById('results-feed');
+    const sample = [
+      "Practice: Alex P1 (1:34.221), Maya P3 (+0.182)",
+      "Qualifying: Alex P2, Maya P4",
+      "Race: Lap 12 — Maya overtakes to P3",
+      "Race: Lap 24 — Safety car deployed",
+      "Race: Finish — Alex P2, Maya P3"
+    ];
+    let i = 0;
+    function pushUpdate() {
+      feed.setAttribute('aria-busy', 'true');
+      setTimeout(() => {
+        const p = document.createElement('p');
+        p.textContent = sample[i % sample.length];
+        feed.appendChild(p);
+        feed.setAttribute('aria-busy', 'false');
+        i++;
+      }, 900);
+    }
+    setInterval(pushUpdate, 3000);
+  </script>
+</body>
 </html>
