@@ -1,93 +1,152 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>MJWR Motorsport Engineering & Management</title>
+  <meta charset="utf-8">
+  <title>MJWR Motorsport Engineering & Management Consultancy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="description" content="Performance, precision, and strategy for motorsport teams worldwide.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter/400.css" rel="stylesheet">
   <style>
-    :root { --brand:#1f2a44; --accent:#e63946; }
-    body { font-family: 'Segoe UI', Roboto, sans-serif; }
-    .navbar { background: var(--brand); }
-    .navbar .nav-link, .navbar-brand { color:#fff; }
-    .header {
-      background: url('/assets/hero-track.jpg') center/cover no-repeat;
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      color: #fff;
-      text-align: center;
+    :root {
+      --brand:#0d1b2a; --accent:#e63946; --text:#1f2937; --muted:#6b7280; --bg:#ffffff;
+      --max:1100px;
     }
-    .header::after {
-      content:"";
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,0.55);
-    }
-    .header-content {
-      position: relative;
-      z-index: 2;
-    }
-    .header img {
-      max-height: 200px;
-      margin-bottom: 1rem;
-    }
-    .btn-accent { background: var(--accent); color:#fff; }
-    .section-title { border-left:4px solid var(--accent); padding-left:.75rem; font-weight:700; }
-    .footer { background:#0e1424; color:#cbd5e1; padding:1rem; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);background:var(--bg)}
+    a{color:var(--accent);text-decoration:none}
+    header{position:sticky;top:0;background:#fff;box-shadow:0 1px 8px rgba(0,0,0,.06);z-index:10}
+    .nav{display:flex;align-items:center;gap:24px;max-width:var(--max);margin:0 auto;padding:14px 20px}
+    .logo{display:flex;align-items:center;gap:12px;font-weight:700;color:var(--brand)}
+    .logo img{height:36px;width:auto}
+    .nav a{color:var(--text);font-weight:600}
+    .cta{margin-left:auto;padding:10px 16px;border:2px solid var(--accent);border-radius:8px}
+    .hero{background:linear-gradient(120deg,#0d1b2a,#1b263b);color:#fff}
+    .wrap{max-width:var(--max);margin:0 auto;padding:56px 20px}
+    .hero h1{font-size:clamp(28px,4vw,44px);margin:0 0 8px}
+    .hero p{color:#e5e7eb;max-width:760px}
+    .btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 16px;border-radius:8px;margin-top:18px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+    .card{border:1px solid #e5e7eb;border-radius:12px;padding:18px;background:#fff}
+    h2{font-size:clamp(22px,3vw,30px);margin:22px 0}
+    .muted{color:var(--muted)}
+    .section{border-top:1px solid #f1f5f9}
+    .case .card h3{margin:0 0 8px}
+    .team .member{display:flex;gap:14px;align-items:center}
+    .member img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #e5e7eb}
+    form{display:grid;gap:12px;max-width:640px}
+    input,textarea{padding:12px;border:1px solid #e5e7eb;border-radius:8px;font:inherit}
+    footer{background:#f8fafc}
+    .small{font-size:14px}
+    /* Accessibility helpers */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="mjwrlogo3.jpg" alt="MJWR Logo" width="48" height="48" class="me-2">
+  <header aria-label="Primary">
+    <nav class="nav" role="navigation">
+      <a class="logo" href="#home" aria-label="MJWR Motorsport home">
+        <img src="assets/logo.svg" alt="MJWR Motorsport logo">
         MJWR Motorsport
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div id="nav" class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="case-studies.html">Case Studies</a></li>
-          <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Large Header -->
-  <header class="header">
-    <div class="header-content">
-      <img src="mjwrlogo1.jpg" alt="MJWR Motorsport Logo">
-      <h1 class="display-4 fw-bold">Engineering & Management Consultancy</h1>
-      <p class="lead">Delivering performance, precision, and strategy for motorsport teams worldwide.</p>
-      <a href="services.html" class="btn btn-lg btn-accent mt-3">Explore Services</a>
-    </div>
+      <a href="#services">Services</a>
+      <a href="#case-studies">Case studies</a>
+      <a href="#team">Team</a>
+      <a href="#contact" class="cta">Contact</a>
+    </nav>
   </header>
 
-  <!-- Main Content -->
-  <main class="container py-5">
-    <h2 class="section-title">Our Expertise</h2>
-    <div class="row mt-3">
-      <div class="col-md-4"><h3>Race Engineering</h3><p>Setup, simulation, and data‑driven performance.</p></div>
-      <div class="col-md-4"><h3>Operations</h3><p>Logistics, spares, and event readiness.</p></div>
-      <div class="col-md-4"><h3>Management</h3><p>Sponsorship, partnerships, and commercial strategy.</p></div>
-    </div>
+  <main id="home">
+    <section class="hero" aria-label="Hero">
+      <div class="wrap">
+        <h1>Engineering & management consultancy for motorsport teams</h1>
+        <p>Delivering performance, precision, and strategy through race engineering, operations, and commercial management.</p>
+        <a class="btn" href="#services">Explore services</a>
+      </div>
+    </section>
+
+    <section id="services" class="section" aria-labelledby="services-title">
+      <div class="wrap">
+        <h2 id="services-title">Our expertise</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Race engineering</h3>
+            <p class="muted">Setup, simulation, data analysis, and performance optimization across test and race operations.</p>
+          </article>
+          <article class="card">
+            <h3>Operations</h3>
+            <p class="muted">Event logistics, spares management, pit‑lane readiness, and reliability processes.</p>
+          </article>
+          <article class="card">
+            <h3>Management</h3>
+            <p class="muted">Sponsorship, partnerships, commercial strategy, and stakeholder reporting.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="case-studies" class="section case" aria-labelledby="case-title">
+      <div class="wrap">
+        <h2 id="case-title">Case studies</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>GT3 setup evolution</h3>
+            <p class="muted">Reduced tire degradation by 12% and improved stint pace by 0.28s/lap via damper maps and aero balance review.</p>
+          </article>
+          <article class="card">
+            <h3>Endurance ops uplift</h3>
+            <p class="muted">Cut pit cycle variance 35% with spares workflows, tooling audits, and standardized comms.</p>
+          </article>
+          <article class="card">
+            <h3>Partner ROI model</h3>
+            <p class="muted">Built sponsor KPI dashboard aligning media value and hospitality conversion to race calendar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="team" class="section team" aria-labelledby="team-title">
+      <div class="wrap">
+        <h2 id="team-title">Team</h2>
+        <div class="grid">
+          <div class="card member">
+            <img src="assets/team-jw.jpg" alt="Jordan Wright, Principal Consultant">
+            <div>
+              <strong>Jordan Wright</strong><br>
+              <span class="muted small">Principal Consultant — Race engineering & operations</span>
+            </div>
+          </div>
+          <div class="card member">
+            <img src="assets/team-ap.jpg" alt="Alex Price, Commercial Lead">
+            <div>
+              <strong>Alex Price</strong><br>
+              <span class="muted small">Commercial Lead — Partnerships & sponsorships</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section" aria-labelledby="contact-title">
+      <div class="wrap">
+        <h2 id="contact-title">Contact</h2>
+        <form action="https://formspree.io/f/your-id" method="post">
+          <label class="sr-only" for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required>
+          <label class="sr-only" for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="Your email" required>
+          <label class="sr-only" for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="How can we help?" required></textarea>
+          <button class="btn" type="submit">Send message</button>
+          <p class="small muted">By submitting, you agree to be contacted regarding our services.</p>
+        </form>
+      </div>
+    </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer text-center">
-    <p>&copy; 2025 MJWR Motorsport Engineering & Management Consultancy</p>
+  <footer aria-label="Footer">
+    <div class="wrap small muted">
+      © 2025 MJWR Motorsport Engineering & Management Consultancy
+    </div>
   </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
