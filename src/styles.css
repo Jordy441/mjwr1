@@ -19,10 +19,11 @@ main > h1 {
   text-align: center;
   font-size: 3.5em;
 }
-@keyframes fadeRotate {
-  0% { opacity: 0; transform: translate(-50%, -50%) rotate(0deg); }
-  50% { opacity: 0.05; }
-  100% { opacity: 0.05; transform: translate(-50%, -50%) rotate(360deg); }
+.hero {
+  background: linear-gradient(120deg, #0d1b2a, #1b263b);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero::before {
@@ -30,29 +31,12 @@ main > h1 {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 36px;
-  height: 36px;
+  width: 400px;
+  height: 400px;
   background: url('mjwrlogo3.jpg') no-repeat center center;
   background-size: contain;
   opacity: 0.05;
   transform: translate(-50%, -50%);
-  animation: fadeRotate 60s linear infinite;
   pointer-events: none;
   z-index: 0;
 }
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 600px;
-  height: 600px;
-  background: url('mjwrlogo1.jpg') no-repeat center center;
-  background-size: contain;
-  opacity: 0.03;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  pointer-events: none;
-}
-
